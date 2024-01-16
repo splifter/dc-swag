@@ -1,0 +1,30 @@
+version: "2.1"
+services:
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - URL=${SWAG_URL}
+      - EMAIL=${SWAG_EMAIL}
+      - SUBDOMAINS=${SWAG_SUBDOMAINS}
+      - VALIDATION=${SWAG_VALIDATION}
+      - DUCKDNSTOKEN=${SWAG_DUCKDNSTOKEN}
+      - ONLY_SUBDOMAINS=${SWAG_ONLY_SUBDOMAINS} #optional
+      - EXTRA_DOMAINS=${SWAG_EXTRA_DOMAINS}
+      - STAGING=${SWAG_STAGING} #optional
+      - DOCKER_MODS=${SWAG_DOCKER_MODS}
+      - CROWDSEC_API_KEY=${CROWDSEC_API_KEY}
+      - CROWDSEC_LAPI_URL=${CROWDSEC_LAPI_URL}
+    volumes:
+      - ${config_storage_path}swag/config:/config
+    ports:
+      - 446:443
+      - 81:80 #optional
+    restart: unless-stopped
+networks:
+  swag:

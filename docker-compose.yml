@@ -6,8 +6,8 @@ services:
     cap_add:
       - NET_ADMIN
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=${PUID}
+      - PGID=${GUID}
       - TZ=${TZ}
       - URL=${SWAG_URL}
       - EMAIL=${SWAG_EMAIL}
@@ -23,8 +23,8 @@ services:
     volumes:
       - ${config_storage_path}swag/config:/config
     ports:
-      - 446:443
-      - 81:80 #optional
+      - ${SWAG_HTTPS_PORT}:443
+      - ${SWAG_HTTP_PORT}:80 #optional
     restart: unless-stopped
 networks:
-  swag:
+  proxy:
